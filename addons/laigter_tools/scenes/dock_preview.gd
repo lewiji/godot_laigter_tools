@@ -17,8 +17,6 @@ func on_images_generated(result: LaigterCliResult):
 	cli_result = result
 	
 	textures.clear()
-	for imported_tex in imported_textures:
-		imported_tex.free()
 	imported_textures.clear()
 	
 	load_preview_images_from_dir(cli_result)
@@ -62,48 +60,48 @@ func load_preview_images_from_dir(cli_result: LaigterCliResult):
 	var lit_preview = preload("preview_lit.tscn").instance()
 	var mat = lit_preview.get_node("%PreviewSpatial/MeshInstance").material_override as SpatialMaterial
 	
-	#var filesystem = File.new()
 	for tex_path in textures:
 		#if filesystem.open(tex_path, File.READ) != OK:
 		#	print("couldn't open file at %s" % tex_path)
 		#	return	
 		var file = File.new()
-		var str_path	= tex_path as String
-		var filename = str_path.get_slice("/", str_path.count("/"))
+		var filename = tex_path.get_slice("/", tex_path.count("/"))
 		var tex = ImageTexture.new()
+		tex.resource_name = filename
 		var img = Image.new()
-		img.load(tex_path)		
-		img.generate_mipmaps()
 		
+		img.load(tex_path)		
+		img.generate_mipmaps()		
 		tex.create_from_image(img, Texture.FLAG_ANISOTROPIC_FILTER | Texture.FLAG_MIPMAPS)
 		imported_textures.append(tex)
+		
 		var preview = preload("preview_image.tscn").instance()
 		preview.get_node("%TextureRect").texture = tex
-		var slices = tex_path
-		preview.get_node("%FilePath").text = filename
-		tex.resource_name = filename
+		preview.get_node("%FilePath").text = filename		
 		grid.add_child(preview)
 		
-		var filename_no_ext = filename.get_slice(".", filename.count(".") - 1)
-		if filename_no_ext.ends_with("_n"):
-		 mat.normal_texture = tex
-		 mat.normal_enabled = true
-		 mat.normal_scale = 1
-		elif filename_no_ext.ends_with("_s"):
-		 mat.roughness_texture = tex
-		 mat.roughness = 1
-		elif filename_no_ext.ends_with("_o"):
-		 mat.ao_texture = tex
-		 mat.ao_enabled = 1
-		 mat.ao_light_affect = 0.5
-		elif filename_no_ext.ends_with("_p"):
-		 mat.depth_texture = tex
-		 mat.depth_enabled = true
-		 mat.depth_deep_parallax = true
-		 mat.depth_scale = 0.05
-		else:
-		 mat.albedo_texture = tex
-		 
+		var file_no_extension = filename.get_slice(".", filename.count(".") - 1)
+		var suffix = file_no_extension.get_slice("_", file_no_extension.count("_"))
+		match (suffix):
+			"n":
+				 mat.normal_texture = tex
+				 mat.normal_enabled = true
+				 mat.normal_scale = 1
+			"s":
+				 mat.roughness_texture = tex
+				 mat.roughness = 1
+			"o":
+				 mat.ao_texture = tex
+				 mat.ao_enabled = 1
+				 mat.ao_light_affect = 0.5
+			"p":
+				 mat.depth_texture = tex
+				 mat.depth_enabled = true
+				 mat.depth_deep_parallax = true
+				 mat.depth_scale = 0.05
+			_:
+				mat.albedo_texture = tex
+
 	grid.add_child(lit_preview)
 	yield(get_tree(), "idle_frame")
 	lit_preview.get_node("%PreviewSpatial/AnimationPlayer").play("spin")

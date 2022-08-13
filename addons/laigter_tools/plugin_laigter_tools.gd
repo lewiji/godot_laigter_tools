@@ -1,15 +1,25 @@
 tool
 extends EditorPlugin
 
-const dock_cache_key = "dock_instance_id"
-
 func get_plugin_name():
 	return "laigter_tools"
 
+const dock_cache_key = "dock_instance_ids"
+
+# initialise user settings if needed, and load the dock PackedScene
+func _enter_tree():
+	initialise_settings()
+	add_docks()
+
+# rescan filesystem after laigter has outputted images to the project
+func on_images_saved():
+	get_editor_interface().get_resource_filesystem().scan()
+
+# add dock scenes to the editor
 func add_docks():
 	# drag n drop target dock
 	var dock_drag_drop = preload("scenes/dock_drag_drop.tscn").instance()
-	add_control_to_dock(EditorPlugin.DOCK_SLOT_LEFT_BR, dock_drag_drop)
+	add_control_to_dock(EditorPlugin.DOCK_SLOT_LEFT_UR, dock_drag_drop)
 	# generated images preview dock
 	var dock_preview = preload("scenes/dock_preview.tscn").instance()
 	add_control_to_bottom_panel(dock_preview, "LaigterTools Preview")
@@ -19,9 +29,6 @@ func add_docks():
 	# save docks' instance ids to temp config
 	LaigterToolsConfig.set_temp_config_value(dock_cache_key, 
 		[dock_drag_drop.get_instance_id(), dock_preview.get_instance_id()])
-
-func on_images_saved():
-	get_editor_interface().get_resource_filesystem().scan()
 
 # set some ProjectSettings up, if they don't exist
 func initialise_settings():
@@ -41,11 +48,6 @@ func initialise_settings():
 			"name": full_name 
 		})
 		ProjectSettings.save()
-
-# initialise user settings if needed, and load the dock PackedScene
-func _enter_tree():
-	initialise_settings()
-	add_docks()
 
 # cleanup
 func _exit_tree():

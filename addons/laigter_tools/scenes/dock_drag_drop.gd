@@ -38,13 +38,13 @@ func setup_options():
 		settings_buttons[setting_idx].pressed = LaigterToolsConfig.get_config_value(setting_idx)
 		settings_buttons[setting_idx].connect("toggled", self, "on_pref_toggled", [setting_idx])
 
-func on_pref_toggled(button_pressed: bool, setting_idx: int):
-	LaigterToolsConfig.set_config_value(setting_idx, button_pressed)
-
 func on_generate_pressed():
 	var result = LaigterCli.execute_laigter(input_texture)
 	if (result.exit_code == 0):
 		 emit_signal("on_images_generated", result)
+	
+func on_pref_toggled(button_pressed: bool, setting_idx: int):
+	LaigterToolsConfig.set_config_value(setting_idx, button_pressed)
 
 # tell godot we accept drag and drop operations, validate the type of data 
 # dropped is supported and check the drop was over our drop zone
