@@ -67,8 +67,8 @@ bg_color = Color( 0.101961, 0, 0.25098, 0.329412 )
 corner_detail = 1
 
 [node name="LaigterTools" type="MarginContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 326.0
+margin_bottom = 140.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -115,46 +115,46 @@ preset to load
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 326.0
+margin_bottom = 140.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 4
 
 [node name="TopToolbar" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 1024.0
+margin_right = 326.0
 margin_bottom = 40.0
 
-[node name="NormalCheck" type="CheckButton" parent="VBoxContainer/TopToolbar"]
+[node name="NormalCheck" type="CheckBox" parent="VBoxContainer/TopToolbar"]
 unique_name_in_owner = true
-margin_right = 90.0
+margin_right = 38.0
 margin_bottom = 40.0
 hint_tooltip = "Generate a normal map image from the input texture"
 pressed = true
 text = "N"
 
-[node name="SpecularCheck" type="CheckButton" parent="VBoxContainer/TopToolbar"]
+[node name="SpecularCheck" type="CheckBox" parent="VBoxContainer/TopToolbar"]
 unique_name_in_owner = true
-margin_left = 94.0
-margin_right = 181.0
+margin_left = 42.0
+margin_right = 77.0
 margin_bottom = 40.0
 hint_tooltip = "Generate a specular map image from the input texture"
 pressed = true
 text = "S"
 
-[node name="OcclusionCheck" type="CheckButton" parent="VBoxContainer/TopToolbar"]
+[node name="OcclusionCheck" type="CheckBox" parent="VBoxContainer/TopToolbar"]
 unique_name_in_owner = true
-margin_left = 185.0
-margin_right = 276.0
+margin_left = 81.0
+margin_right = 120.0
 margin_bottom = 40.0
 hint_tooltip = "Generate an ambient occlusion map image from the input texture"
 pressed = true
 text = "O"
 
-[node name="ParallaxCheck" type="CheckButton" parent="VBoxContainer/TopToolbar"]
+[node name="ParallaxCheck" type="CheckBox" parent="VBoxContainer/TopToolbar"]
 unique_name_in_owner = true
-margin_left = 280.0
-margin_right = 368.0
+margin_left = 124.0
+margin_right = 160.0
 margin_bottom = 40.0
 hint_tooltip = "Generate a depth map image from the input texture"
 pressed = true
@@ -162,16 +162,18 @@ text = "P"
 
 [node name="PresetMenu" type="MenuButton" parent="VBoxContainer/TopToolbar"]
 unique_name_in_owner = true
-margin_left = 372.0
-margin_right = 444.0
+margin_left = 164.0
+margin_right = 217.0
 margin_bottom = 40.0
 hint_tooltip = "Export presets from Laigter to the `laigter_presets` folder in the addon, and reload the plugin"
-text = "Presets..."
+size_flags_horizontal = 6
+text = "Preset"
+items = [ "default", null, 1, true, false, 0, 0, null, "", false, "default", null, 1, false, false, 0, 0, null, "", false, "default", null, 1, false, false, 0, 0, null, "", false ]
 
 [node name="GuiCheck" type="CheckButton" parent="VBoxContainer/TopToolbar"]
 unique_name_in_owner = true
-margin_left = 448.0
-margin_right = 1024.0
+margin_left = 221.0
+margin_right = 326.0
 margin_bottom = 40.0
 hint_tooltip = "Show the Laigter GUI when generating maps"
 size_flags_horizontal = 11
@@ -179,15 +181,14 @@ custom_icons/off = SubResource( 3 )
 custom_icons/on_disabled = SubResource( 5 )
 custom_icons/on = SubResource( 7 )
 custom_icons/off_disabled = SubResource( 9 )
-pressed = true
 text = "GUI"
 align = 2
 
 [node name="DropContainer" type="MarginContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 margin_top = 44.0
-margin_right = 1024.0
-margin_bottom = 572.0
+margin_right = 326.0
+margin_bottom = 116.0
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -200,8 +201,8 @@ custom_constants/margin_bottom = 2
 unique_name_in_owner = true
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 1022.0
-margin_bottom = 526.0
+margin_right = 324.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 96, 64 )
 mouse_filter = 1
 size_flags_horizontal = 3
@@ -211,7 +212,7 @@ custom_styles/panel = SubResource( 1 )
 [node name="Label" type="Label" parent="VBoxContainer/DropContainer/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-text = "Drop Image(s) Here"
+text = "Drop Image Here"
 align = 1
 valign = 1
 autowrap = true
@@ -219,8 +220,8 @@ autowrap = true
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/DropContainer"]
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 1022.0
-margin_bottom = 526.0
+margin_right = 324.0
+margin_bottom = 70.0
 mouse_filter = 1
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
@@ -231,8 +232,8 @@ custom_constants/margin_bottom = 10
 unique_name_in_owner = true
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 1010.0
-margin_bottom = 514.0
+margin_right = 312.0
+margin_bottom = 58.0
 rect_min_size = Vector2( 32, 32 )
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -241,38 +242,28 @@ expand = true
 stretch_mode = 6
 
 [node name="BottomToolbar" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 576.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_top = 120.0
+margin_right = 326.0
+margin_bottom = 140.0
 
 [node name="GenerateMaps" type="Button" parent="VBoxContainer/BottomToolbar"]
 unique_name_in_owner = true
-margin_right = 962.0
-margin_bottom = 24.0
+margin_right = 326.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Generate"
 
-[node name="AudoGenerateCheck" type="CheckBox" parent="VBoxContainer/BottomToolbar"]
-unique_name_in_owner = true
-margin_left = 966.0
-margin_right = 1024.0
-margin_bottom = 24.0
-hint_tooltip = "Generate immediately on dropping an image"
-text = "Auto"
-
 [node name="FileDialogContainer" type="CenterContainer" parent="."]
 visible = false
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_right = 700.0
+margin_bottom = 500.0
 mouse_filter = 2
 
 [node name="FileDialog" type="FileDialog" parent="FileDialogContainer"]
 unique_name_in_owner = true
 visible = true
-margin_left = 162.0
-margin_top = 50.0
-margin_right = 862.0
-margin_bottom = 550.0
+margin_right = 700.0
+margin_bottom = 500.0
 rect_min_size = Vector2( 700, 500 )
 popup_exclusive = true
 window_title = "Open a File"

@@ -4,10 +4,10 @@ extends Control
 signal on_images_generated(cli_result)
 
 # Options controls
-onready var normal_check: CheckButton = get_node("%NormalCheck")
-onready var specular_check: CheckButton = get_node("%SpecularCheck")
-onready var occlusion_check: CheckButton = get_node("%OcclusionCheck")
-onready var parallax_check: CheckButton = get_node("%ParallaxCheck")
+onready var normal_check: CheckBox = get_node("%NormalCheck")
+onready var specular_check: CheckBox = get_node("%SpecularCheck")
+onready var occlusion_check: CheckBox = get_node("%OcclusionCheck")
+onready var parallax_check: CheckBox = get_node("%ParallaxCheck")
 onready var preset_menu: MenuButton = get_node("%PresetMenu")
 onready var show_gui_check: CheckButton = get_node("%GuiCheck")
 # Laigter preset load dialog
@@ -70,8 +70,13 @@ func on_preset_selected(id: int):
 
 func on_generate_pressed():
 	var result = LaigterCli.execute_laigter(input_texture, presets[selected_preset])
-	if (result.exit_code == 0):
+	if (LTConfig.get_config_value(LTConfig.ConfigKeys.HIDE_LAIGTER_GUI) != true or result.exit_code == 0):
 		 emit_signal("on_images_generated", result)
+		
+func on_reset():
+	image_preview.texture = null
+	input_texture = null
+	image_panel.get_node("Label").visible = true
 	
 func on_pref_toggled(button_pressed: bool, setting_idx: int):
 	LTConfig.set_config_value(setting_idx, button_pressed)
