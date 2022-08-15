@@ -9,6 +9,7 @@ onready var specular_check: CheckButton = get_node("%SpecularCheck")
 onready var occlusion_check: CheckButton = get_node("%OcclusionCheck")
 onready var parallax_check: CheckButton = get_node("%ParallaxCheck")
 onready var preset_menu: MenuButton = get_node("%PresetMenu")
+onready var show_gui_check: CheckButton = get_node("%GuiCheck")
 # Laigter preset load dialog
 onready var file_dialog: FileDialog = get_node("%FileDialog")
 # Drag & Drop/Image Preview Controls
@@ -23,10 +24,11 @@ var input_texture: Texture
 var image_file_extensions = ResourceLoader.get_recognized_extensions_for_type("Image")
 
 onready var settings_buttons = {
-	LaigterToolsConfig.ConfigKeys.GENERATE_NORMAL_MAP: normal_check, 
-	LaigterToolsConfig.ConfigKeys.GENERATE_SPECULAR: specular_check, 
-	LaigterToolsConfig.ConfigKeys.GENERATE_OCCLUSION: occlusion_check, 
-	LaigterToolsConfig.ConfigKeys.GENERATE_PARALLAX: parallax_check
+	LTConfig.ConfigKeys.GENERATE_NORMAL_MAP: normal_check, 
+	LTConfig.ConfigKeys.GENERATE_SPECULAR: specular_check, 
+	LTConfig.ConfigKeys.GENERATE_OCCLUSION: occlusion_check, 
+	LTConfig.ConfigKeys.GENERATE_PARALLAX: parallax_check, 
+	LTConfig.ConfigKeys.HIDE_LAIGTER_GUI: show_gui_check
 }
 
 func _ready():
@@ -35,7 +37,7 @@ func _ready():
 
 func setup_options():
 	for setting_idx in settings_buttons:
-		settings_buttons[setting_idx].pressed = LaigterToolsConfig.get_config_value(setting_idx)
+		settings_buttons[setting_idx].pressed = LTConfig.get_config_value(setting_idx)
 		settings_buttons[setting_idx].connect("toggled", self, "on_pref_toggled", [setting_idx])
 
 func on_generate_pressed():
@@ -44,7 +46,7 @@ func on_generate_pressed():
 		 emit_signal("on_images_generated", result)
 	
 func on_pref_toggled(button_pressed: bool, setting_idx: int):
-	LaigterToolsConfig.set_config_value(setting_idx, button_pressed)
+	LTConfig.set_config_value(setting_idx, button_pressed)
 
 # tell godot we accept drag and drop operations, validate the type of data 
 # dropped is supported and check the drop was over our drop zone

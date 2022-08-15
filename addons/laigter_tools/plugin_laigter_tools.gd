@@ -27,15 +27,15 @@ func add_docks():
 	dock_drag_drop.connect("on_images_generated", dock_preview, "on_images_generated")
 	dock_preview.connect("on_images_saved", self, "on_images_saved")
 	# save docks' instance ids to temp config
-	LaigterToolsConfig.set_temp_config_value(dock_cache_key, 
+	LTConfig.set_temp_config_value(dock_cache_key, 
 		[dock_drag_drop.get_instance_id(), dock_preview.get_instance_id()])
 
 # set some ProjectSettings up, if they don't exist
 func initialise_settings():
-	for setting in LaigterToolsConfig.ConfigKeys:
-		var setting_id = LaigterToolsConfig.ConfigKeys[setting]
-		var full_name = LaigterToolsConfig.get_qualified_setting_name(setting_id)
-		var config: Dictionary = LaigterToolsConfig.get_config_defaults()[setting_id]
+	for setting in LTConfig.ConfigKeys:
+		var setting_id = LTConfig.ConfigKeys[setting]
+		var full_name = LTConfig.get_qualified_setting_name(setting_id)
+		var config: Dictionary = LTConfig.get_config_defaults()[setting_id]
 		
 		if (ProjectSettings.has_setting(full_name) or config == null):
 			continue
@@ -52,7 +52,7 @@ func initialise_settings():
 # cleanup
 func _exit_tree():
 	# retrieve saved temp config dock instance id if possible
-	var dock_id = LaigterToolsConfig.get_temp_config_value(dock_cache_key)
+	var dock_id = LTConfig.get_temp_config_value(dock_cache_key)
 	if dock_id == null:
 		return
 	
@@ -67,4 +67,4 @@ func _exit_tree():
 			dockInstance.free()
 
 	# it's too late for you now, instance id
-	LaigterToolsConfig.set_temp_config_value(dock_cache_key, null)
+	LTConfig.set_temp_config_value(dock_cache_key, null)
