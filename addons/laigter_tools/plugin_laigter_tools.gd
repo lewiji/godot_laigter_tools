@@ -59,12 +59,13 @@ func _exit_tree():
 	for dock_instance_id in dock_id:
 		var dockInstance = instance_from_id(int(dock_instance_id))
 		if (is_instance_valid(dockInstance) and dockInstance is Control):
-			match (dockInstance as Control).name:
-				"LaigterDock":
-					remove_control_from_docks(dockInstance)
-				"LaigterPreviewDock":
-					remove_control_from_bottom_panel(dockInstance)
-			dockInstance.free()
+			var name: String = dockInstance.name
+			if (name.begins_with("LaigterTools")):
+				remove_control_from_docks(dockInstance)
+				dockInstance.free()
+			elif (name.begins_with("LaigterPreviewDock")):
+				remove_control_from_bottom_panel(dockInstance)
+				dockInstance.free()
 
 	# it's too late for you now, instance id
 	LTConfig.set_temp_config_value(dock_cache_key, null)

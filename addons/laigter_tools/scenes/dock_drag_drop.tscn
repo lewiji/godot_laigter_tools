@@ -165,14 +165,15 @@ unique_name_in_owner = true
 margin_left = 372.0
 margin_right = 444.0
 margin_bottom = 40.0
+hint_tooltip = "Export presets from Laigter to the `laigter_presets` folder in the addon, and reload the plugin"
 text = "Presets..."
-items = [ "Default", null, 0, false, false, 0, 0, null, "", false, "", null, 0, false, false, 1, 0, null, "", true, "Load Preset...", null, 0, false, false, 2, 0, null, "", false ]
 
 [node name="GuiCheck" type="CheckButton" parent="VBoxContainer/TopToolbar"]
 unique_name_in_owner = true
 margin_left = 448.0
 margin_right = 1024.0
 margin_bottom = 40.0
+hint_tooltip = "Show the Laigter GUI when generating maps"
 size_flags_horizontal = 11
 custom_icons/off = SubResource( 3 )
 custom_icons/on_disabled = SubResource( 5 )

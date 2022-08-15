@@ -11,6 +11,7 @@ const LAIGTER_BIN_DEFAULT_PATH = {
 	"Windows": "%APPDATA%\\..\\Local\\Programs\\Laigter\\laigter.exe", 
 	"OSX": "/Applications/laigter.app"
 }
+const PRESETS_DEFAULT_PATH = "res://addons/laigter_tools/laigter_presets"
 # config keys for configurable settings
 enum ConfigKeys { 
 	GENERATE_NORMAL_MAP = 0, 

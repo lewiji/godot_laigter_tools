@@ -22,6 +22,8 @@ onready var generate_button: Button = get_node("%GenerateMaps")
 # The Texture resource to be used as input to Laigter
 var input_texture: Texture
 var image_file_extensions = ResourceLoader.get_recognized_extensions_for_type("Image")
+var presets = []
+var selected_preset = 0
 
 onready var settings_buttons = {
 	LTConfig.ConfigKeys.GENERATE_NORMAL_MAP: normal_check, 
@@ -33,6 +35,7 @@ onready var settings_buttons = {
 
 func _ready():
 	setup_options()
+	load_presets()
 	generate_button.connect("pressed", self, "on_generate_pressed")
 
 func setup_options():
@@ -40,8 +43,33 @@ func setup_options():
 		settings_buttons[setting_idx].pressed = LTConfig.get_config_value(setting_idx)
 		settings_buttons[setting_idx].connect("toggled", self, "on_pref_toggled", [setting_idx])
 
+func load_presets():
+	var dir = Directory.new()
+	dir.open(LTConfig.PRESETS_DEFAULT_PATH)
+	dir.list_dir_begin()
+	var file_name = dir.get_next()
+	while file_name != "":
+		if !dir.current_is_dir():
+			preset_menu.get_popup().add_check_item(file_name, presets.size())
+			presets.append(file_name)
+		file_name = dir.get_next()
+		
+	selected_preset = 0
+	if (presets.size() > 0):
+		preset_menu.get_popup().set_item_checked(selected_preset, true)
+	
+	preset_menu.get_popup().connect("id_pressed", self, "on_preset_selected")
+	
+func on_preset_selected(id: int):
+	if (id < presets.size()):
+		selected_preset = id
+	
+	var preset_items = preset_menu.get_popup().get_item_count()
+	for i in range(preset_items):
+		preset_menu.get_popup().set_item_checked(i, true if selected_preset == i else false)
+
 func on_generate_pressed():
-	var result = LaigterCli.execute_laigter(input_texture)
+	var result = LaigterCli.execute_laigter(input_texture, presets[selected_preset])
 	if (result.exit_code == 0):
 		 emit_signal("on_images_generated", result)
 	

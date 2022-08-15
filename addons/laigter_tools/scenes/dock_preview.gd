@@ -44,8 +44,7 @@ func on_scan_changes():
 	var file_name = dir.get_next()
 	while file_name != "":
 		if !dir.current_is_dir():
-		 print("Found file: " + file_name)
-		 textures.append("%s/%s" % [dir_path, file_name])
+			textures.append("%s/%s" % [dir_path, file_name])
 		file_name = dir.get_next()
 
 func on_save_requested():

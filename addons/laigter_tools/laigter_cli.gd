@@ -52,8 +52,11 @@ static func get_absolute_resource_path(res_path: String):
 		abs_path = "'%s'" % abs_path
 	filesystem.close()
 	return abs_path
+	
+static func get_preset(preset_name: String):
+	return "-r %s" % get_absolute_resource_path("%s/%s" % [LTConfig.PRESETS_DEFAULT_PATH, preset_name])
 
-static func execute_laigter(input_texture: Texture) -> LaigterCliResult:
+static func execute_laigter(input_texture: Texture, preset: String = "") -> LaigterCliResult:
 	var result_obj = LaigterCliResult.new()
 	if (input_texture != null):
 		var dir = Directory.new()
@@ -68,10 +71,11 @@ static func execute_laigter(input_texture: Texture) -> LaigterCliResult:
 		assert(dir.copy(input_texture.resource_path, result_obj.cache_file_path) == OK, "failed to copy texture resource to tmp user:// dir")
 		
 		print("copying '%s' from\n'%s' to '%s'" % [input_texture.resource_path.get_file(), input_texture.resource_path.get_base_dir(), result_obj.cache_file_path])
-		var command = "{laigter_binary} {flags} -d {input_texture}".format({
+		var command = "{laigter_binary} {flags} {preset} -d {input_texture}".format({
 		 "laigter_binary": LTConfig.get_config_value(LTConfig.ConfigKeys.LAIGTER_BINARY_PATH), 
 		 "flags": get_cmd_flags(), 
-		 "input_texture": get_absolute_resource_path(result_obj.cache_file_path)
+		 "input_texture": get_absolute_resource_path(result_obj.cache_file_path),
+		 "preset": get_preset(preset) if preset != "" else ""
 		})
 		result_obj.exit_code = execute_cmd(command, LTConfig.get_config_value(LTConfig.ConfigKeys.HIDE_LAIGTER_GUI))
 	return result_obj
