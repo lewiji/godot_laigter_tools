@@ -16,12 +16,19 @@ onready var btn_reset: Button = get_node("%Reset")
 func _ready():
 	btn_save.connect("pressed", self, "on_save_requested")
 	btn_reset.connect("pressed", self, "on_reset_pressed")
-	connect("hide", self, "on_hide")
+	connect("visibility_changed", self, "on_visibility_changed")
 	
 func on_hide():
-	print("Hidden")
 	if (scan_changes_timer != null and !scan_changes_timer.is_stopped()):
-		pass#scan_changes_timer.stop()
+		scan_changes_timer.stop()
+		
+func on_visibility_changed():
+	if is_visible_in_tree():
+		if (scan_changes_timer != null and scan_changes_timer.is_stopped()):
+			scan_changes_timer.start(2)
+	else:
+		if (scan_changes_timer != null and !scan_changes_timer.is_stopped()):
+			scan_changes_timer.stop()
 	
 func on_images_generated(result: LaigterCliResult):
 	cli_result = result
