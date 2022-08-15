@@ -6,4 +6,4 @@ This plugin requires the Laigter tool to be installed on your system somewhere. 
 
 ![Preview screenshot of the LaigterTools plugin](https://i.imgur.com/ImKNB9c.png)
 
-Current features are unfinished, untested and minimal. Notably, presets don't work right now.
+Current features are unfinished, untested and minimal.
