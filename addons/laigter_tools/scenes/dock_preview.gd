@@ -64,7 +64,6 @@ func on_save_requested():
 	for texture in imported_textures:
 		if (save_textures[texture]):
 			var new_file_name = "%s/%s" % [cli_result.input_file.get_base_dir(), imported_textures[texture].resource_name]
-			print(new_file_name)
 			ResourceSaver.save(new_file_name, imported_textures[texture])
 			if (save_spatial_material and spatial_material != null):
 				var new_texture = load(new_file_name)
@@ -101,14 +100,12 @@ func enumerate_textures_from_dir(path: String):
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
 	while file_name != "":
-		print(file_name)
 		if !dir.current_is_dir():
 			texture_paths.append("%s/%s" % [path, file_name])
 		file_name = dir.get_next()
 	dir.list_dir_end()
 	
 func on_save_changed(checked, filename):
-	print("Save %s: %s" % [filename, checked])
 	save_textures[filename] = checked
 	
 func on_save_mat_changed(checked):
@@ -125,7 +122,6 @@ func add_texture_preview(tex: Texture, filename: String):
 func set_spatial_material_texture(mat: SpatialMaterial, tex: Texture, filename: String):
 	var file_no_extension = filename.get_slice(".", filename.count(".") - 1)
 	var suffix = file_no_extension.get_slice("_", file_no_extension.count("_"))
-	print(suffix)
 	match (suffix):
 		"n":
 			 mat.normal_texture = tex
@@ -172,7 +168,6 @@ func load_preview_images_from_dir(cli_result: LaigterCliResult):
 	mat.params_cull_mode = SpatialMaterial.CULL_DISABLED
 	var file = File.new()
 	for tex_path in texture_paths:
-		print(tex_path)
 		create_texture_from_image(tex_path, mat, file)
 	spatial_material = mat
 	lit_preview.get_node("%PreviewSpatial/MeshInstance").material_override = mat

@@ -22,8 +22,6 @@ static func get_cmd_flags() -> String:
 	for setting_idx in LTConfig.ConfigKeys:
 		if LTConfig.get_config_value(LTConfig.ConfigKeys[setting_idx]) and defaults[LTConfig.ConfigKeys[setting_idx]].has("cli_flag"):
 			flags.append(defaults[LTConfig.ConfigKeys[setting_idx]]["cli_flag"])
-	
-	print(flags.join(" "))
 	return flags.join(" ")
 
 # execute a process
@@ -31,12 +29,12 @@ static func get_cmd_flags() -> String:
 static func execute_cmd(cmd: String, blocking = true) -> int:
 	var native = os_command[OS.get_name()]
 	var output = []
-	print("%s %s %s" % [native.console, native.flag, cmd])
-	var exit_code_or_pid = OS.execute(native.console, [native.flag, cmd], blocking, output, true)
+	print("Executing: %s %s %s" % [native.console, native.flag, cmd])
+	var exit_code_or_pid = OS.execute(native.console, [native.flag, cmd], blocking, output)
 	if (blocking and exit_code_or_pid != 0):
 		print("Process exited with code: %d" % exit_code_or_pid)
-	for line in output:
-		print(line)
+		for line in output:
+			print(line)
 	return exit_code_or_pid
 
 # given a Resource, get the full OS file path from the res:// path

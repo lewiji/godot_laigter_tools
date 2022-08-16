@@ -84,5 +84,3 @@ func remove_recursive(path):
 		
 		# Remove current path
 		directory.remove(path)
-	else:
-		print("Error removing " + path)
