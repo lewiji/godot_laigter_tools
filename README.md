@@ -6,7 +6,7 @@ Requires Laigter by Azagaya: [Github](https://github.com/azagaya/laigter) | [Itc
 
 The Project Setting `laigter/LAIGTER_BINARY_PATH` will be created when the plugin is used, set this to the Laigter binary/executable if installed portably or the default setting doesn't work.
 
-![Preview screenshot of the LaigterTools plugin](https://i.imgur.com/ImKNB9c.png)
+https://user-images.githubusercontent.com/233380/184919559-1bc0b1fe-8dcc-431c-9f25-aecb77684eb6.mp4
 
 Current features are unfinished, untested and minimal.
 
