@@ -18,5 +18,5 @@ Current features are unfinished, untested and minimal.
 * Choose whether to open the Laigter GUI or not (if you want to tweak values).
 * Changes to the temporary textures will be detected and reloaded, e.g. when exporting from the Laigter GUI or making external changes in an image editor.
 * Hit "Save" to save the textures alongside the original texture in the filesystem.
- * Check/uncheck "Save" next to a texture to select which textures to keep.
- * Check "Save" next to the 3D preview to also save a `SpatialMaterial` resource with the textures in the appropriate slots.
+  * Check/uncheck "Save" next to a texture to select which textures to keep.
+  * Check "Save" next to the 3D preview to also save a `SpatialMaterial` resource with the textures in the appropriate slots.
