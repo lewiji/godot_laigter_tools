@@ -44,6 +44,7 @@ func setup_options():
 		settings_buttons[setting_idx].connect("toggled", self, "on_pref_toggled", [setting_idx])
 
 func load_presets():
+	preset_menu.get_popup().clear()
 	var dir = Directory.new()
 	dir.open(LTConfig.PRESETS_DEFAULT_PATH)
 	dir.list_dir_begin()

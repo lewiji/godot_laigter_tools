@@ -27,7 +27,7 @@ static func get_config_defaults() -> Dictionary:
 		ConfigKeys.GENERATE_SPECULAR: {"type": TYPE_BOOL, "default": true, "cli_flag": "-c"}, 
 		ConfigKeys.GENERATE_OCCLUSION: {"type": TYPE_BOOL, "default": true, "cli_flag": "-o"}, 
 		ConfigKeys.GENERATE_PARALLAX: {"type": TYPE_BOOL, "default": true, "cli_flag": "-p"}, 
-		ConfigKeys.HIDE_LAIGTER_GUI: {"type": TYPE_BOOL, "default": true, "cli_flag": "--no-gui"}, 
+		ConfigKeys.HIDE_LAIGTER_GUI: {"type": TYPE_BOOL, "default": true}, 
 		ConfigKeys.LAIGTER_BINARY_PATH: {"type": TYPE_STRING, "hint": PROPERTY_HINT_GLOBAL_FILE, 
 		 "default": LAIGTER_BIN_DEFAULT_PATH[OS.get_name()]}}
 

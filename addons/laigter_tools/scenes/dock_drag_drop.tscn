@@ -115,14 +115,14 @@ preset to load
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_right = 326.0
-margin_bottom = 140.0
+margin_right = 338.0
+margin_bottom = 168.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 4
 
 [node name="TopToolbar" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 326.0
+margin_right = 338.0
 margin_bottom = 40.0
 
 [node name="NormalCheck" type="CheckBox" parent="VBoxContainer/TopToolbar"]
@@ -163,17 +163,17 @@ text = "P"
 [node name="PresetMenu" type="MenuButton" parent="VBoxContainer/TopToolbar"]
 unique_name_in_owner = true
 margin_left = 164.0
-margin_right = 217.0
+margin_right = 229.0
 margin_bottom = 40.0
 hint_tooltip = "Export presets from Laigter to the `laigter_presets` folder in the addon, and reload the plugin"
 size_flags_horizontal = 6
-text = "Preset"
-items = [ "default", null, 1, true, false, 0, 0, null, "", false, "default", null, 1, false, false, 0, 0, null, "", false, "default", null, 1, false, false, 0, 0, null, "", false ]
+text = "Preset..."
+items = [ "default", null, 1, true, false, 0, 0, null, "", false ]
 
 [node name="GuiCheck" type="CheckButton" parent="VBoxContainer/TopToolbar"]
 unique_name_in_owner = true
-margin_left = 221.0
-margin_right = 326.0
+margin_left = 233.0
+margin_right = 338.0
 margin_bottom = 40.0
 hint_tooltip = "Show the Laigter GUI when generating maps"
 size_flags_horizontal = 11
@@ -187,8 +187,9 @@ align = 2
 [node name="DropContainer" type="MarginContainer" parent="VBoxContainer"]
 unique_name_in_owner = true
 margin_top = 44.0
-margin_right = 326.0
-margin_bottom = 116.0
+margin_right = 338.0
+margin_bottom = 144.0
+rect_min_size = Vector2( 0, 100 )
 mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -201,8 +202,8 @@ custom_constants/margin_bottom = 2
 unique_name_in_owner = true
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 324.0
-margin_bottom = 70.0
+margin_right = 336.0
+margin_bottom = 98.0
 rect_min_size = Vector2( 96, 64 )
 mouse_filter = 1
 size_flags_horizontal = 3
@@ -220,8 +221,8 @@ autowrap = true
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/DropContainer"]
 margin_left = 2.0
 margin_top = 2.0
-margin_right = 324.0
-margin_bottom = 70.0
+margin_right = 336.0
+margin_bottom = 98.0
 mouse_filter = 1
 custom_constants/margin_right = 10
 custom_constants/margin_top = 10
@@ -232,8 +233,8 @@ custom_constants/margin_bottom = 10
 unique_name_in_owner = true
 margin_left = 10.0
 margin_top = 10.0
-margin_right = 312.0
-margin_bottom = 58.0
+margin_right = 324.0
+margin_bottom = 86.0
 rect_min_size = Vector2( 32, 32 )
 mouse_filter = 2
 size_flags_horizontal = 3
@@ -242,13 +243,13 @@ expand = true
 stretch_mode = 6
 
 [node name="BottomToolbar" type="HBoxContainer" parent="VBoxContainer"]
-margin_top = 120.0
-margin_right = 326.0
-margin_bottom = 140.0
+margin_top = 148.0
+margin_right = 338.0
+margin_bottom = 168.0
 
 [node name="GenerateMaps" type="Button" parent="VBoxContainer/BottomToolbar"]
 unique_name_in_owner = true
-margin_right = 326.0
+margin_right = 338.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 text = "Generate"
