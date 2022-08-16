@@ -1,4 +1,4 @@
-# Godot Laigter Tools
+# Godot 3.5 Laigter Tools
 
 Plugin to simplify workflow with the Laigter PBR map generator tool.
 
