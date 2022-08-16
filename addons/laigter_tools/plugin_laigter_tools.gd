@@ -22,6 +22,7 @@ func add_docks():
 	# connect "generate" button
 	var dock_drag_drop = bottom_panel.get_node("%DragNDrop")
 	var dock_preview = bottom_panel.get_node("%PreviewDock")
+	dock_preview.editor_filesystem = get_editor_interface().get_resource_filesystem()
 	dock_drag_drop.connect("on_images_generated", dock_preview, "on_images_generated")
 	dock_preview.connect("on_images_saved", self, "on_images_saved")
 	dock_preview.connect("on_reset", dock_drag_drop, "on_reset")

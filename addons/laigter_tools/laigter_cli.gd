@@ -70,7 +70,7 @@ static func execute_laigter(input_texture: Texture, preset: String = "") -> Laig
 		
 		print("copying '%s' from\n'%s' to '%s'" % [input_texture.resource_path.get_file(), input_texture.resource_path.get_base_dir(), result_obj.cache_file_path])
 		
-		var command = "{laigter_binary} {flags} --no-gui {preset} -d {input_texture}".format({
+		var command = "{laigter_binary} --no-gui {flags} {preset} -d {input_texture}".format({
 		 "laigter_binary": LTConfig.get_config_value(LTConfig.ConfigKeys.LAIGTER_BINARY_PATH), 
 		 "flags": get_cmd_flags(), 
 		 "input_texture": get_absolute_resource_path(result_obj.cache_file_path),

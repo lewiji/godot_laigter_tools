@@ -11,6 +11,7 @@ var save_textures = {}
 var save_spatial_material = false
 var spatial_material: SpatialMaterial
 var modified_times: Dictionary
+var editor_filesystem: EditorFileSystem
 onready var grid: GridContainer = get_node("%PreviewGrid")
 onready var btn_save: Button = get_node("%SaveImages")
 onready var btn_reset: Button = get_node("%Reset")
@@ -64,17 +65,24 @@ func on_save_requested():
 	for texture in imported_textures:
 		if (save_textures[texture]):
 			var new_file_name = "%s/%s" % [cli_result.input_file.get_base_dir(), imported_textures[texture].resource_name]
-			ResourceSaver.save(new_file_name, imported_textures[texture])
-			if (save_spatial_material and spatial_material != null):
-				var new_texture = load(new_file_name)
-				set_spatial_material_texture(spatial_material, new_texture, texture)
+			ResourceSaver.save(new_file_name, imported_textures[texture], ResourceSaver.FLAG_CHANGE_PATH)
 			
+	emit_signal("on_images_saved")
+	
+	yield(editor_filesystem, "resources_reimported")
+	
 	if (save_spatial_material and spatial_material != null):
+		for texture in imported_textures:
+			if (save_textures[texture]):
+				if (save_spatial_material and spatial_material != null):
+					var new_file_name = "%s/%s" % [cli_result.input_file.get_base_dir(), imported_textures[texture].resource_name]
+					var new_texture = load(new_file_name)
+					set_spatial_material_texture(spatial_material, new_texture, texture)
 		var filename = cli_result.input_file.get_file()
 		var file_no_extension = filename.get_slice(".", filename.count(".") - 1)
 		# TODO this saves the material with embedded resources, rather than the filesystem resources we just saved
 		ResourceSaver.save("%s/%s_spatial_material.tres" % [cli_result.input_file.get_base_dir(), file_no_extension], spatial_material)
-	emit_signal("on_images_saved")
+		emit_signal("on_images_saved")
 	
 # when "propagate" is true, emit signal allowing other scenes to reset too
 func reset(propagate: bool = true):

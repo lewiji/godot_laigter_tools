@@ -72,7 +72,8 @@ func on_preset_selected(id: int):
 func on_generate_pressed():
 	var result = LaigterCli.execute_laigter(input_texture, presets[selected_preset])
 	if (LTConfig.get_config_value(LTConfig.ConfigKeys.HIDE_LAIGTER_GUI) != true or result.exit_code == 0):
-		 emit_signal("on_images_generated", result)
+		yield(get_tree(), "idle_frame")
+		emit_signal("on_images_generated", result)
 		
 func on_reset():
 	image_preview.texture = null
