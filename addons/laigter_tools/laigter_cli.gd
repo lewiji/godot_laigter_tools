@@ -30,11 +30,11 @@ static func execute_cmd(cmd: String, blocking = true) -> int:
 	var native = os_command[OS.get_name()]
 	var output = []
 	print("Executing: %s %s %s" % [native.console, native.flag, cmd])
-	var exit_code_or_pid = OS.execute(native.console, [native.flag, cmd], blocking, output)
+	var exit_code_or_pid = OS.execute(native.console, [native.flag, cmd], blocking, output, true)
 	if (blocking and exit_code_or_pid != 0):
 		print("Process exited with code: %d" % exit_code_or_pid)
-		for line in output:
-			print(line)
+	for line in output:
+		print(line)
 	return exit_code_or_pid
 
 # given a Resource, get the full OS file path from the res:// path
@@ -47,7 +47,7 @@ static func get_absolute_resource_path(res_path: String):
 		return null	
 	var abs_path = filesystem.get_path_absolute()
 	if (OS.get_name() == "X11"):
-		abs_path = "'%s'" % abs_path
+		abs_path = '"%s"' % abs_path
 	filesystem.close()
 	return abs_path
 	
@@ -69,23 +69,29 @@ static func execute_laigter(input_texture: Texture, preset: String = "") -> Laig
 		assert(dir.copy(input_texture.resource_path, result_obj.cache_file_path) == OK, "failed to copy texture resource to tmp user:// dir")
 		
 		print("copying '%s' from\n'%s' to '%s'" % [input_texture.resource_path.get_file(), input_texture.resource_path.get_base_dir(), result_obj.cache_file_path])
+		
 		var command = "{laigter_binary} {flags} --no-gui {preset} -d {input_texture}".format({
 		 "laigter_binary": LTConfig.get_config_value(LTConfig.ConfigKeys.LAIGTER_BINARY_PATH), 
 		 "flags": get_cmd_flags(), 
 		 "input_texture": get_absolute_resource_path(result_obj.cache_file_path),
 		 "preset": get_preset(preset) if preset != "" else ""
 		})
-		result_obj.exit_code = execute_cmd(command)
+		result_obj.exit_code = execute_cmd(command, true)
 		
-		# execute gui separately if requested, so we can generate initial textures in a blocking way
-		if (!LTConfig.get_config_value(LTConfig.ConfigKeys.HIDE_LAIGTER_GUI)):
-			var gui_command = "{laigter_binary} {preset} -d {input_texture}".format({
-			 "laigter_binary": LTConfig.get_config_value(LTConfig.ConfigKeys.LAIGTER_BINARY_PATH), 
-			 "input_texture": get_absolute_resource_path(result_obj.cache_file_path),
-			 "preset": get_preset(preset) if preset != "" else ""
-			})
-			execute_cmd(gui_command, false)
+		if (LTConfig.get_config_value(LTConfig.ConfigKeys.HIDE_LAIGTER_GUI) != true):
+			execute_laigter_gui(input_texture, preset)
 	return result_obj
+	
+static func execute_laigter_gui(input_texture: Texture, preset: String = ""):
+	var file_hash = input_texture.resource_path.hash()
+	var cache_file_path = "%s/%s" % [LTConfig.get_cache_path(file_hash), input_texture.resource_path.get_file()]
+	var gui_command = "{laigter_binary} {flags} {preset} -d {input_texture}".format({
+		 "laigter_binary": LTConfig.get_config_value(LTConfig.ConfigKeys.LAIGTER_BINARY_PATH), 
+		 "flags": get_cmd_flags(), 
+		 "input_texture": get_absolute_resource_path(cache_file_path),
+		 "preset": get_preset(preset) if preset != "" else ""
+		})
+	return execute_cmd(gui_command, false)
 
 #	└─▪ laigter --help
 #	Usage: laigter [options]
