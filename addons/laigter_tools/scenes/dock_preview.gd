@@ -63,10 +63,17 @@ func on_save_requested():
 	assert(cli_result != null, "No Laigter results object found, couldn't save")
 	for texture in imported_textures:
 		if (save_textures[texture]):
-			ResourceSaver.save("%s/%s" % [cli_result.input_file.get_base_dir(), imported_textures[texture].resource_name], imported_textures[texture])
+			var new_file_name = "%s/%s" % [cli_result.input_file.get_base_dir(), imported_textures[texture].resource_name]
+			print(new_file_name)
+			ResourceSaver.save(new_file_name, imported_textures[texture])
+			if (save_spatial_material and spatial_material != null):
+				var new_texture = load(new_file_name)
+				set_spatial_material_texture(spatial_material, new_texture, texture)
+			
 	if (save_spatial_material and spatial_material != null):
 		var filename = cli_result.input_file.get_file()
 		var file_no_extension = filename.get_slice(".", filename.count(".") - 1)
+		# TODO this saves the material with embedded resources, rather than the filesystem resources we just saved
 		ResourceSaver.save("%s/%s_spatial_material.tres" % [cli_result.input_file.get_base_dir(), file_no_extension], spatial_material)
 	emit_signal("on_images_saved")
 	
